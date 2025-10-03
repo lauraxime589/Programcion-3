@@ -4,10 +4,12 @@ defmodule Main do
     c1 = %Cliente{nombre: "Jhan", cedula: "123"}
     c2 = Cliente.crear("Laura", "456")
     c3 = Cliente.crear("Ana", "789")
-    Cliente.escrbir_csv([c1, c2, c3], "clientes.csv")
-    IO.puts("Archivo creado")
+    Cliente.escribir_csv([c1, c2, c3], "clientes.csv")
 
-    
+     list_clientes_leidos = Cliente.leer_csv("clientes.csv")
+    IO.inspect(list_clientes_leidos)
+
+
 
     p1 = %Producto{nombre: "Arroz", precio: 3000.0}
     p2 = %Producto{nombre: "Frijol", precio: 4500}
@@ -17,6 +19,10 @@ defmodule Main do
     d2 = %Detalle{producto: p2, cantidad: 1}
     d3 = %Detalle{producto: p3, cantidad: 3}
       Detalle.escribir_csv([d1, d2, d3], "detalles.csv")
+
+      detalles_leidos = Detalle.leer_csv("detalles.csv")
+IO.inspect(detalles_leidos)
+
 
 
 

@@ -31,7 +31,28 @@ defmodule Detalle do
   File.write(nombre_archivo, headers <> contenido) # anadir [append: true] como 3er parametro para agregar al final del archivo
 end
 
+def leer_csv(nombre_archivo) do
+  case File.read(nombre_archivo) do
+    {:ok, contenido} ->
+      String.split(contenido, "\n")
+      |> Enum.map(fn line ->
+        case String.split(line, ", ") do
+          ["Producto", "Cantidad", "Subtotal"] -> nil # Ignorar headers
+          [nombre_producto, cantidad, subtotal] ->
+            %Detalle{
+              producto: %Producto{nombre: nombre_producto, precio: String.to_float(subtotal) / String.to_integer(cantidad)},
+              cantidad: String.to_integer(cantidad)
+            }
+          _ -> nil
+        end
+      end)
+      |> Enum.filter(& &1)
 
+    {:error, reason} ->
+      IO.puts("Error al leer el archivo: #{reason}")
+      []
+  end
 end
 
 
+end
